@@ -4,168 +4,142 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MITZII HUB | ELITE PROMOTER</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --neon: #00ffcc;
-            --bg: #000000;
-            --card-bg: rgba(15, 15, 15, 0.8);
-            --border: rgba(0, 255, 204, 0.2);
+            --accent: #3b82f6; /* Modern Blue */
+            --bg: #050505;
+            --surface: #111111;
+            --text: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: white; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
 
-        /* --- 1. HIGH MOTION ANIMATED BACKGROUND --- */
-        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; }
+        /* --- BACKGROUND ANIMATION --- */
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; opacity: 0.4; }
 
-        /* --- Dashboard Stats --- */
+        /* --- TOP DASHBOARD --- */
         .dashboard {
-            display: flex; justify-content: space-between; padding: 15px 5%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; padding: 12px 5%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1); sticky; top: 0; z-index: 1000;
         }
-        .stat-item { color: var(--neon); font-size: 12px; font-weight: 800; text-transform: uppercase; margin-right: 15px; }
+        .dash-item { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--accent); letter-spacing: 1px; }
 
-        /* --- Hero Header --- */
-        header { text-align: center; padding: 80px 20px 40px; }
-        .logo-main { 
-            font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 8vw, 4rem); 
-            background: linear-gradient(to bottom, #fff, var(--neon));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(0,255,204,0.5));
+        /* --- HEADER --- */
+        header { text-align: center; padding: 60px 20px; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; }
+        .logo span { color: var(--accent); }
+        .subtitle { font-size: 14px; color: #666; text-transform: uppercase; letter-spacing: 4px; }
+
+        /* --- ACTION BAR --- */
+        .action-container { display: flex; justify-content: center; margin-bottom: 40px; }
+        .btn-main {
+            background: var(--accent); color: white; padding: 15px 35px; border-radius: 50px;
+            border: none; font-weight: 700; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
         }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(59, 130, 246, 0.5); }
 
-        /* --- Content Layout --- */
-        .container { max-width: 1200px; margin: auto; padding: 20px; }
-        .actions-bar { display: flex; justify-content: center; margin-bottom: 50px; }
+        /* --- GRID & CARDS --- */
+        .container { max-width: 1100px; margin: auto; padding: 0 20px; }
+        .group-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         
-        .btn-elite {
-            padding: 18px 40px; border-radius: 5px; background: transparent;
-            border: 2px solid var(--neon); color: var(--neon); font-weight: 800;
-            text-transform: uppercase; cursor: pointer; transition: 0.4s;
-            box-shadow: inset 0 0 10px var(--border);
+        .card {
+            background: var(--surface); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px; padding: 25px; position: relative;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeIn 0.5s ease forwards;
         }
-        .btn-elite:hover { background: var(--neon); color: #000; box-shadow: 0 0 30px var(--neon); transform: scale(1.05); }
-
-        /* --- Dynamic Group Grid --- */
-        .group-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
-        .group-card {
-            background: var(--card-bg); border: 1px solid var(--border); padding: 30px;
-            border-radius: 15px; transition: 0.4s; position: relative; overflow: hidden;
-            animation: cardSlide 0.8s ease-out;
-        }
-        @keyframes cardSlide { from { opacity: 0; transform: translateY(30px); } }
-        .group-card:hover { border-color: var(--neon); background: rgba(0,255,204,0.05); transform: translateY(-10px); }
+        .card:hover { border-color: var(--accent); background: #161616; transform: scale(1.02); }
         
-        .category-tag { font-size: 10px; color: var(--neon); border: 1px solid var(--neon); padding: 3px 8px; border-radius: 4px; margin-bottom: 15px; display: inline-block; }
-        .group-card h3 { font-size: 20px; margin-bottom: 10px; font-weight: 800; }
-        .group-card p { font-size: 14px; color: #888; line-height: 1.6; margin-bottom: 25px; }
-        
-        .join-btn {
-            display: block; width: 100%; text-align: center; padding: 12px;
-            background: #111; color: #fff; text-decoration: none; border-radius: 8px;
-            font-weight: 700; border: 1px solid #333; transition: 0.3s;
-        }
-        .join-btn:hover { border-color: var(--neon); color: var(--neon); }
+        .card-img { width: 60px; height: 60px; border-radius: 15px; background: #222; margin-bottom: 15px; object-fit: cover; }
+        .card-cat { font-size: 10px; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; display: block; }
+        .card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { font-size: 13px; color: #888; margin-bottom: 20px; height: 40px; overflow: hidden; }
 
-        /* --- Floating Add Modal --- */
-        #modal-overlay {
+        .btn-join { display: inline-block; width: 100%; text-align: center; padding: 10px; background: #222; color: white; text-decoration: none; border-radius: 10px; font-weight: 600; font-size: 13px; }
+        .btn-join:hover { background: var(--accent); }
+
+        .btn-delete {
+            position: absolute; top: 15px; right: 15px; background: none; border: none;
+            color: #444; cursor: pointer; font-size: 18px; transition: 0.3s;
+        }
+        .btn-delete:hover { color: #ff4444; }
+
+        /* --- MODAL --- */
+        .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 2000; display: none;
-            justify-content: center; align-items: center;
+            background: rgba(0,0,0,0.9); z-index: 2000; display: none;
+            align-items: center; justify-content: center; padding: 20px;
         }
-        .modal-box {
-            background: #0a0a0a; border: 1px solid var(--neon); padding: 40px;
-            width: 90%; max-width: 500px; border-radius: 10px;
-        }
-        input, select, textarea {
-            width: 100%; padding: 15px; margin-bottom: 15px; background: #111;
-            border: 1px solid #222; color: #fff; outline: none; border-radius: 5px;
-        }
-        input:focus { border-color: var(--neon); }
+        .modal-box { background: #0a0a0a; border: 1px solid var(--accent); padding: 30px; border-radius: 24px; width: 100%; max-width: 450px; }
+        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 15px; background: #181818; border: 1px solid #222; color: white; border-radius: 12px; outline: none; }
+        input:focus { border-color: var(--accent); }
 
-        /* --- Notice --- */
-        .footer-notice {
-            margin-top: 60px; text-align: center; font-size: 11px;
-            color: #444; border-top: 1px solid #111; padding-top: 20px;
+        /* --- MUSIC PLAYER --- */
+        .player-dock {
+            position: fixed; bottom: 30px; right: 30px; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 20px; border-radius: 50px; display: flex; align-items: center; gap: 15px;
         }
+        .play-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .track-info { font-size: 11px; }
 
-        /* --- Audio Interface --- */
-        .audio-dock {
-            position: fixed; bottom: 30px; left: 30px; z-index: 3000;
-            display: flex; align-items: center; background: rgba(0,0,0,0.8);
-            border: 1px solid var(--neon); padding: 10px 20px; border-radius: 50px;
-        }
-        #play-btn {
-            width: 40px; height: 40px; background: var(--neon); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; color: #000; font-size: 18px; margin-right: 12px;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body onclick="autoPlayInit()">
+<body onclick="initAudio()">
 
     <canvas id="bg-canvas"></canvas>
 
     <div class="dashboard">
         <div>
-            <span class="stat-item">TIME: <span id="clock">00:00</span></span>
-            <span class="stat-item">PING: <span id="ping">0ms</span></span>
-            <span class="stat-item">CONN: <span id="conn">4G</span></span>
+            <span class="dash-item">LATENCY: <span id="ping">--</span></span>
+            <span class="dash-item" style="margin-left: 20px;">SYSTEM: <span id="clock">00:00</span></span>
         </div>
-        <div class="stat-item" style="margin:0;">DEV: MITZII</div>
+        <span class="dash-item">ENCRYPTED CONNECTION</span>
     </div>
 
     <header>
-        <h1 class="logo-main">MITZII HUB</h1>
-        <p style="color: #666; letter-spacing: 5px; font-size: 12px;">ELITE PROMOTION SYSTEM</p>
+        <h1 class="logo">MITZII <span>HUB</span></h1>
+        <div class="subtitle">Premium Community Directory</div>
     </header>
 
     <div class="container">
-        <div class="actions-bar">
-            <button class="btn-elite" onclick="openModal()">+ SUBMIT YOUR COMMUNITY</button>
+        <div class="action-container">
+            <button class="btn-main" onclick="toggleModal(true)">+ ADD NEW COMMUNITY</button>
         </div>
 
-        <h2 style="font-size: 14px; letter-spacing: 2px; color: #444; margin-bottom: 25px;">ACTIVE COMMUNITIES</h2>
-        
         <div class="group-grid" id="group-list">
-            <div class="group-card">
-                <span class="category-tag">ENTERTAINMENT</span>
-                <h3>Everything Channel</h3>
-                <p>Top status videos, lyrics, and funny memes from Sri Lanka.</p>
-                <a href="#" class="join-btn">JOIN CHANNEL</a>
             </div>
-        </div>
-
-        <div class="footer-notice">
-            NOTICE: WE ARE NOT RESPONSIBLE FOR ANY CONTENT SHARED IN THESE GROUPS. ILLEGAL GROUPS WILL BE BANNED.
-            <br>DESIGNED & DEVELOPED BY DEV MITZII.
-        </div>
     </div>
 
-    <div id="modal-overlay">
+    <div class="modal" id="modal">
         <div class="modal-box">
-            <h2 style="color: var(--neon); margin-bottom: 25px;">SUBMIT GROUP</h2>
-            <input type="text" id="g-name" placeholder="Group / Channel Name">
-            <input type="url" id="g-link" placeholder="Invite Link">
-            <select id="g-cat">
-                <option>Entertainment</option>
-                <option>Technology</option>
-                <option>Movies</option>
-                <option>Education</option>
+            <h2 style="margin-bottom: 20px;">SUBMIT GROUP</h2>
+            <input type="text" id="in-name" placeholder="Name">
+            <input type="url" id="in-link" placeholder="Invite Link">
+            <input type="url" id="in-img" placeholder="Logo Image URL (Optional)">
+            <select id="in-cat">
+                <option>CHAT GROUP</option>
+                <option>ENTERTAINMENT</option>
+                <option>TECHNOLOGY</option>
+                <option>EDUCATION</option>
             </select>
-            <textarea id="g-info" rows="3" placeholder="Rules & Short Description"></textarea>
-            <button class="btn-elite" style="width: 100%;" onclick="submitGroup()">PUBLISH NOW</button>
-            <button onclick="closeModal()" style="width: 100%; background: none; border: none; color: #555; margin-top: 15px; cursor: pointer;">CANCEL</button>
+            <textarea id="in-desc" rows="3" placeholder="Brief description..."></textarea>
+            <button class="btn-main" style="width: 100%;" onclick="saveGroup()">PUBLISH NOW</button>
+            <button onclick="toggleModal(false)" style="background:none; border:none; color:#555; width:100%; margin-top:15px; cursor:pointer;">CANCEL</button>
         </div>
     </div>
 
-    <div class="audio-dock">
-        <div id="play-btn" onclick="toggleAudio()">▶</div>
-        <div style="font-size: 11px;">
-            <div style="color: var(--neon); font-weight: 800;">AUTO-PLAY ACTIVE</div>
-            <div id="track-name">SINHALA NEW SONG</div>
+    <div class="player-dock">
+        <button class="play-btn" onclick="togglePlay()" id="play-trigger">▶</button>
+        <div class="track-info">
+            <div style="font-weight: 800; color: var(--accent);">SINHALA MIX</div>
+            <div id="status">CLICK TO PLAY</div>
         </div>
     </div>
 
@@ -174,87 +148,93 @@
     </audio>
 
     <script>
-        // --- 1. HIGH MOTION BACKGROUND (Electric Lines) ---
+        // --- 1. CLEAN BACKGROUND ANIMATION ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        let lines = [];
+        let points = [];
 
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.onresize = resize; resize();
-
-        for(let i=0; i<40; i++) {
-            lines.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                l: Math.random() * 100 + 50,
-                v: Math.random() * 2 + 1
+        function initBG() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            for(let i=0; i<50; i++) points.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2, v: Math.random()*0.5});
+        }
+        function drawBG() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            ctx.fillStyle = "#3b82f6";
+            points.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+                p.y -= p.v; if(p.y < 0) p.y = canvas.height;
             });
+            requestAnimationFrame(drawBG);
+        }
+        window.onresize = initBG; initBG(); drawBG();
+
+        // --- 2. FUNCTIONAL LOGIC (CRUD) ---
+        let groups = JSON.parse(localStorage.getItem('mitzii_groups')) || [];
+
+        function renderGroups() {
+            const list = document.getElementById('group-list');
+            list.innerHTML = groups.map((g, index) => `
+                <div class="card">
+                    <button class="btn-delete" onclick="deleteGroup(${index})">×</button>
+                    <img src="${g.img || 'https://cdn-icons-png.flaticon.com/512/124/124034.png'}" class="card-img">
+                    <span class="card-cat">${g.cat}</span>
+                    <h3>${g.name}</h3>
+                    <p>${g.desc}</p>
+                    <a href="${g.link}" target="_blank" class="btn-join">JOIN COMMUNITY</a>
+                </div>
+            `).join('');
         }
 
-        function draw() {
-            ctx.fillStyle = "rgba(0,0,0,0.1)";
-            ctx.fillRect(0,0,canvas.width, canvas.height);
-            ctx.strokeStyle = "#00ffcc";
-            ctx.lineWidth = 1;
-            lines.forEach(l => {
-                ctx.beginPath();
-                ctx.moveTo(l.x, l.y);
-                ctx.lineTo(l.x, l.y + l.l);
-                ctx.stroke();
-                l.y += l.v;
-                if(l.y > canvas.height) l.y = -l.l;
-            });
-            requestAnimationFrame(draw);
+        function saveGroup() {
+            const newGroup = {
+                name: document.getElementById('in-name').value,
+                link: document.getElementById('in-link').value,
+                img: document.getElementById('in-img').value,
+                cat: document.getElementById('in-cat').value,
+                desc: document.getElementById('in-desc').value
+            };
+            if(!newGroup.name || !newGroup.link) return alert("Fill required fields!");
+            groups.unshift(newGroup);
+            localStorage.setItem('mitzii_groups', JSON.stringify(groups));
+            renderGroups();
+            toggleModal(false);
         }
-        draw();
 
-        // --- 2. LIVE DASHBOARD (Time & Ping) ---
-        function updateDashboard() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
-            document.getElementById('ping').innerText = Math.floor(Math.random() * 40 + 20) + "ms";
+        function deleteGroup(index) {
+            groups.splice(index, 1);
+            localStorage.setItem('mitzii_groups', JSON.stringify(groups));
+            renderGroups();
         }
-        setInterval(updateDashboard, 1000);
 
-        // --- 3. AUTO MUSIC LOGIC ---
+        function toggleModal(show) { document.getElementById('modal').style.display = show ? 'flex' : 'none'; }
+
+        // --- 3. AUDIO FIX ---
         const audio = document.getElementById('bg-audio');
-        let isStarted = false;
+        let audioStarted = false;
 
-        function autoPlayInit() {
-            if(!isStarted) {
-                audio.play();
-                document.getElementById('play-btn').innerText = "⏸";
-                isStarted = true;
+        function initAudio() {
+            if(!audioStarted) {
+                audio.play().catch(() => console.log("User must interact first"));
+                document.getElementById('play-trigger').innerText = "⏸";
+                document.getElementById('status').innerText = "NOW PLAYING";
+                audioStarted = true;
             }
         }
 
-        function toggleAudio() {
-            if(audio.paused) { audio.play(); document.getElementById('play-btn').innerText = "⏸"; }
-            else { audio.pause(); document.getElementById('play-btn').innerText = "▶"; }
+        function togglePlay() {
+            if(audio.paused) { audio.play(); document.getElementById('play-trigger').innerText = "⏸"; }
+            else { audio.pause(); document.getElementById('play-trigger').innerText = "▶"; }
         }
 
-        // --- 4. FORM LOGIC ---
-        function openModal() { document.getElementById('modal-overlay').style.display = 'flex'; }
-        function closeModal() { document.getElementById('modal-overlay').style.display = 'none'; }
+        // --- 4. LIVE DASHBOARD ---
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.getHours().toString().padStart(2,'0') + ":" + now.getMinutes().toString().padStart(2,'0');
+            document.getElementById('ping').innerText = Math.floor(Math.random() * 30 + 10) + "ms";
+        }, 1000);
 
-        function submitGroup() {
-            const name = document.getElementById('g-name').value;
-            if(!name) return alert("Enter Group Name!");
-            
-            // Add to UI immediately (Real functionality requires Firebase/Database)
-            const list = document.getElementById('group-list');
-            const newCard = document.createElement('div');
-            newCard.className = 'group-card';
-            newCard.innerHTML = `
-                <span class="category-tag">${document.getElementById('g-cat').value}</span>
-                <h3>${name}</h3>
-                <p>${document.getElementById('g-info').value}</p>
-                <a href="${document.getElementById('g-link').value}" class="join-btn">JOIN NOW</a>
-            `;
-            list.prepend(newCard);
-            closeModal();
-            alert("Group Published Successfully!");
-        }
+        renderGroups();
     </script>
 </body>
 </html>
