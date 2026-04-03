@@ -3,239 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MITZII HUB | Advanced Group Directory</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <title>MITZII HUB | Communities</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #007aff;
-            --primary-glow: rgba(0, 122, 255, 0.2);
-            --bg: #ffffff;
-            --text: #1d1d1f;
-            --card: #f5f5f7;
-            --border: #d2d2d7;
-            --glass: rgba(255, 255, 255, 0.8);
-        }
-
-        [data-theme="dark"] {
-            --bg: #000000;
-            --text: #f5f5f7;
-            --card: #1c1c1e;
-            --border: #38383a;
-            --glass: rgba(28, 28, 30, 0.8);
+            --primary: #00ff7f; /* Neon Green Theme from Mitzii */
+            --bg: #0a0a0a;
+            --card: #161616;
+            --text: #ffffff;
+            --border: #222222;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: var(--text); transition: 0.5s; overflow-x: hidden; }
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* --- 1. Premium Live Animation Background --- */
-        #mesh-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.7; }
-
-        /* --- Navigation Bar --- */
-        nav { 
-            padding: 15px 6%; background: var(--glass); backdrop-filter: blur(25px);
-            border-bottom: 1px solid var(--border); display: flex; justify-content: space-between;
-            align-items: center; position: sticky; top: 0; z-index: 1000;
+        /* --- 1. Enhanced Live Background --- */
+        #bg-animation {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: radial-gradient(circle at 50% 50%, #001a10 0%, #000000 100%);
         }
-        .logo { font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; color: var(--text); text-decoration: none; }
-        .logo span { color: var(--primary); }
 
-        /* --- Main Form Section (GroupSor Inspired) --- */
-        .container { max-width: 800px; margin: 50px auto; padding: 0 20px; }
-        .form-card { 
-            background: var(--card); padding: 40px; border-radius: 30px; 
-            border: 1px solid var(--border); box-shadow: 0 25px 50px rgba(0,0,0,0.1);
-            animation: fadeInUp 0.8s ease-out;
+        /* --- Navigation --- */
+        nav {
+            padding: 20px 6%; background: rgba(0,0,0,0.8); backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
         }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
 
-        h2 { margin-bottom: 30px; font-weight: 700; font-size: 28px; text-align: center; font-family: 'Space Grotesk', sans-serif; }
+        .container { max-width: 1000px; margin: auto; padding: 30px 20px; }
 
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 10px; font-weight: 600; font-size: 14px; color: var(--text); }
+        /* --- Search & Filter (GroupSor Style) --- */
+        .filter-box {
+            background: var(--card); padding: 25px; border-radius: 20px;
+            margin-bottom: 40px; border: 1px solid var(--border);
+        }
+        .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        select, input {
+            padding: 12px; border-radius: 10px; background: #222; border: 1px solid #333; color: white; width: 100%;
+        }
+        .btn-add {
+            background: var(--primary); color: #000; padding: 12px 25px; border-radius: 10px;
+            font-weight: 700; cursor: pointer; border: none; margin-bottom: 20px; transition: 0.3s;
+        }
+        .btn-add:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--primary); }
+
+        /* --- Group Cards (Showing Added Groups First) --- */
+        .group-list { display: grid; gap: 20px; }
+        .group-card {
+            background: var(--card); padding: 20px; border-radius: 18px;
+            border: 1px solid var(--border); display: flex; align-items: center; gap: 20px;
+            transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .group-card:hover { border-color: var(--primary); background: #1c1c1c; }
+        .group-img { width: 60px; height: 60px; border-radius: 12px; background: #333; overflow: hidden; }
+        .group-info h3 { font-size: 18px; margin-bottom: 5px; }
+        .group-info p { color: #888; font-size: 13px; margin-bottom: 10px; }
+        .badge { background: #333; color: #aaa; padding: 4px 10px; border-radius: 6px; font-size: 11px; margin-right: 5px; }
         
-        input, select, textarea {
-            width: 100%; padding: 16px; border-radius: 14px; border: 1px solid var(--border);
-            background: var(--bg); color: var(--text); outline: none; transition: 0.3s; font-size: 15px;
-        }
-        input:focus, select:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
-
-        .btn-submit {
-            background: var(--primary); color: white; width: 100%; padding: 18px;
-            border-radius: 16px; border: none; font-weight: 700; font-size: 16px; cursor: pointer; transition: 0.3s;
-            margin-top: 10px;
-        }
-        .btn-submit:hover { transform: scale(1.02); box-shadow: 0 10px 20px var(--primary-glow); }
-
-        /* --- Notice Box --- */
-        .notice-box {
-            margin-top: 30px; padding: 20px; border-radius: 15px;
-            background: rgba(0, 122, 255, 0.08); border-left: 5px solid var(--primary);
-            font-size: 13px; color: var(--text); line-height: 1.6;
+        .join-btn {
+            margin-left: auto; background: transparent; border: 1px solid var(--primary);
+            color: var(--primary); padding: 8px 20px; border-radius: 8px; text-decoration: none; font-size: 14px;
         }
 
-        /* --- Audio Controls --- */
-        .audio-player { position: fixed; bottom: 25px; left: 25px; z-index: 1000; }
-        .music-toggle {
-            background: var(--primary); color: white; width: 45px; height: 45px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; box-shadow: 0 8px 15px rgba(0,0,0,0.2); font-size: 18px;
+        /* --- Floating Form (Hidden by Default) --- */
+        #form-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000; display: none;
+            justify-content: center; align-items: center;
         }
+        .form-content { background: var(--card); padding: 30px; border-radius: 25px; width: 90%; max-width: 500px; border: 1px solid var(--primary); }
 
-        @media (max-width: 600px) { .form-card { padding: 25px; } h2 { font-size: 22px; } }
+        /* --- Audio Player --- */
+        .audio-dock { position: fixed; bottom: 20px; left: 20px; z-index: 3000; display: flex; align-items: center; gap: 10px; }
+        .play-btn { background: var(--primary); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; color: #000; }
     </style>
 </head>
-<body onclick="initAudio()">
+<body onclick="playMusic()">
 
-    <canvas id="mesh-canvas"></canvas>
+    <canvas id="bg-animation"></canvas>
 
     <nav>
-        <a href="#" class="logo">MITZII <span>HUB</span></a>
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <span onclick="toggleTheme()" style="cursor:pointer; font-size: 14px; font-weight: 700;">🌗 Mode</span>
-        </div>
+        <div class="logo">MITZII <span>HUB</span></div>
+        <button class="btn-add" onclick="toggleForm(true)">+ Add Group</button>
     </nav>
 
     <div class="container">
-        <div class="form-card">
-            <h2>Add Your WhatsApp Group</h2>
-            <form id="group-form">
-                
-                <div class="form-group">
-                    <label>Enter WhatsApp Group Invite Link...</label>
-                    <input type="url" placeholder="https://chat.whatsapp.com/..." required>
-                    <small style="font-size: 11px; color: #86868b; margin-top: 5px; display: block;">Ex:- https://chat.whatsapp.com/CluEPPD7DuiEkai8nxFIZP</small>
-                </div>
+        <div class="filter-box">
+            <div class="filter-grid">
+                <input type="text" placeholder="Search groups...">
+                <select><option>All Categories</option><option>Entertainment</option></select>
+                <select><option>Sri Lanka</option><option>Global</option></select>
+                <button class="btn-add" style="margin:0;">Find Group</button>
+            </div>
+        </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                    <div class="form-group">
-                        <label>Select Group Category</label>
-                        <select required>
-                            <option value="">Any Category</option>
-                            <option>Film/Animation</option>
-                            <option>Gaming/Apps</option>
-                            <option>Entertainment</option>
-                            <option>Education</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Select Group Country</label>
-                        <select required>
-                            <option value="">Any Country</option>
-                            <option>Sri Lanka</option>
-                            <option>Global</option>
-                            <option>United States</option>
-                        </select>
-                    </div>
+        <h2 style="margin-bottom: 20px; font-size: 20px;">Recently Added Groups</h2>
+        <div class="group-list">
+            <div class="group-card">
+                <div class="group-img"><img src="https://i.ibb.co/vz6v5xT/logo.png" style="width:100%"></div>
+                <div class="group-info">
+                    <h3>Everything Channel</h3>
+                    <p>Status videos, lyrics, and memes in Sri Lanka.</p>
+                    <span class="badge">Entertainment</span> <span class="badge">🇱🇰 Sri Lanka</span>
                 </div>
+                <a href="#" class="join-btn">Join Now</a>
+            </div>
 
-                <div class="form-group">
-                    <label>Select Group Language</label>
-                    <select required>
-                        <option value="">Any Language</option>
-                        <option>Sinhala</option>
-                        <option>English</option>
-                        <option>Swedish</option>
-                    </select>
+            <div class="group-card">
+                <div class="group-img"></div>
+                <div class="group-info">
+                    <h3>Zero Attacker HQ</h3>
+                    <p>Cyber security tips and tools updates.</p>
+                    <span class="badge">Technology</span> <span class="badge">Global</span>
                 </div>
-
-                <div class="form-group">
-                    <label>Enter Tags by Comma (,) Separated (Optional)</label>
-                    <input type="text" placeholder="Ex:- Funny, Jokes, City, State">
-                </div>
-
-                <div class="form-group">
-                    <label>Enter Group Information and Rules (Optional)</label>
-                    <textarea rows="4" placeholder="Description length (Up to 1000 Words)"></textarea>
-                </div>
-
-                <button type="submit" class="btn-submit">Submit Group</button>
-
-                <div class="notice-box">
-                    <b>Important Note:</b> Your group will be visible to the public world wide (Everyone). By submitting, you agree to our <u>Rules for Group Publisher</u>. වැරදි තොරතුරු ඇතුළත් කිරීමෙන් වළකින්න.
-                </div>
-            </form>
+                <a href="#" class="join-btn">Join Group</a>
+            </div>
         </div>
     </div>
 
-    <audio id="bg-audio" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-    </audio>
-    <div class="audio-player">
-        <div class="music-toggle" id="m-btn" onclick="controlMusic()">🔇</div>
+    <div id="form-overlay" onclick="toggleForm(false)">
+        <div class="form-content" onclick="event.stopPropagation()">
+            <h2 style="margin-bottom:20px;">Add New Community</h2>
+            <input type="text" placeholder="Group Name" style="margin-bottom:15px;">
+            <input type="url" placeholder="Invite Link (WhatsApp/Telegram)" style="margin-bottom:15px;">
+            <textarea placeholder="Small Notice / Rules" style="width:100%; background:#222; border:1px solid #333; border-radius:10px; padding:12px; color:white; height:80px; margin-bottom:15px;"></textarea>
+            <button class="btn-add" style="width:100%;">Submit Group</button>
+            <p style="font-size:11px; color:#666; margin-top:10px; text-align:center;">Note: වැරදි links ඇතුළත් කිරීමෙන් වළකින්න.</p>
+        </div>
     </div>
 
+    <div class="audio-dock">
+        <div class="play-btn" id="p-icon" onclick="toggleMusic()">▶</div>
+        <span id="track-name" style="font-size:12px; color:var(--primary);">Playing: Sinhala New Rap...</span>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-        // 1. Live Mesh Animation
-        const canvas = document.getElementById('mesh-canvas');
+        // 1. Live Background Animation (Particles)
+        const canvas = document.getElementById('bg-animation');
         const ctx = canvas.getContext('2d');
-        let atoms = [];
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Atom {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.r = Math.random() * 150 + 50;
-                this.dx = (Math.random() - 0.5) * 0.8;
-                this.dy = (Math.random() - 0.5) * 0.8;
-                this.color = Math.random() > 0.5 ? 'rgba(0,122,255,0.1)' : 'rgba(236,72,153,0.08)';
-            }
-            update() {
-                this.x += this.dx; this.y += this.dy;
-                if(this.x < 0 || this.x > canvas.width) this.dx *= -1;
-                if(this.y < 0 || this.y > canvas.height) this.dy *= -1;
-            }
-            draw() {
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
-                ctx.fillStyle = this.color; ctx.fill();
-            }
-        }
+        let particles = [];
 
         function init() {
-            resize();
-            atoms = Array.from({length: 8}, () => new Atom());
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for(let i=0; i<50; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2 + 1,
+                    speedX: Math.random() * 1 - 0.5,
+                    speedY: Math.random() * 1 - 0.5
+                });
+            }
         }
 
         function animate() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            atoms.forEach(a => { a.update(); a.draw(); });
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(0, 255, 127, 0.3)";
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                p.x += p.speedX; p.y += p.speedY;
+                if(p.x > canvas.width || p.x < 0) p.speedX *= -1;
+                if(p.y > canvas.height || p.y < 0) p.speedY *= -1;
+            });
             requestAnimationFrame(animate);
         }
         init(); animate();
-        window.onresize = resize;
 
-        // 2. Music Control Logic (Auto-play workaround)
-        const audio = document.getElementById('bg-audio');
-        let audioStarted = false;
+        // 2. Form Toggle
+        function toggleForm(show) {
+            document.getElementById('form-overlay').style.display = show ? 'flex' : 'none';
+        }
 
-        function initAudio() {
-            if (!audioStarted) {
-                audio.play();
-                audioStarted = true;
-                document.getElementById('m-btn').innerText = "🔊";
+        // 3. Music Controls
+        const music = document.getElementById('bg-music');
+        let musicStarted = false;
+
+        function playMusic() {
+            if(!musicStarted) {
+                music.play();
+                musicStarted = true;
+                document.getElementById('p-icon').innerText = "⏸";
             }
         }
 
-        function controlMusic() {
-            if (audio.paused) {
-                audio.play();
-                document.getElementById('m-btn').innerText = "🔊";
-            } else {
-                audio.pause();
-                document.getElementById('m-btn').innerText = "🔇";
-            }
-        }
-
-        // 3. Theme Toggle
-        function toggleTheme() {
-            const body = document.body;
-            body.setAttribute('data-theme', body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        function toggleMusic() {
+            if(music.paused) { music.play(); document.getElementById('p-icon').innerText = "⏸"; }
+            else { music.pause(); document.getElementById('p-icon').innerText = "▶"; }
         }
     </script>
 </body>
 </html>
-
