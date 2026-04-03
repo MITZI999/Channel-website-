@@ -9,79 +9,93 @@
         :root {
             --accent: #00d4ff;
             --bg: #020202;
-            --surface: rgba(20, 20, 20, 0.6);
-            --border: rgba(255, 255, 255, 0.08);
+            --surface: rgba(20, 20, 20, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background: var(--bg); color: #fff; overflow-x: hidden; }
 
-        /* Moving Cyber Background */
-        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; opacity: 0.5; }
+        /* Moving Cyber Grid Background */
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; opacity: 0.3; }
 
-        /* Top Dashboard */
+        /* Dashboard */
         .dashboard {
             display: flex; justify-content: space-between; padding: 15px 5%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000;
         }
-        .dash-info { font-family: 'Orbitron', sans-serif; font-size: 11px; color: var(--accent); letter-spacing: 1px; }
+        .dash-info { font-family: 'Orbitron', sans-serif; font-size: 10px; color: var(--accent); letter-spacing: 1px; }
 
         /* Header */
-        header { text-align: center; padding: 60px 20px; }
-        .logo { font-family: 'Orbitron', sans-serif; font-size: 3rem; font-weight: 800; text-shadow: 0 0 20px rgba(0,212,255,0.4); }
-        .logo span { color: var(--accent); }
+        header { text-align: center; padding: 50px 20px; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 800; }
+        .logo span { color: var(--accent); text-shadow: 0 0 15px var(--accent); }
 
-        /* Main Grid */
-        .container { max-width: 1100px; margin: auto; padding: 0 20px; }
-        .add-btn-box { display: flex; justify-content: center; margin-bottom: 50px; }
-        .btn-elite {
-            padding: 16px 45px; border-radius: 50px; background: var(--accent);
-            color: #000; border: none; font-weight: 800; cursor: pointer;
-            transition: 0.3s; box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
-        }
-        .btn-elite:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5); }
-
-        .group-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        .card {
-            background: var(--surface); border: 1px solid var(--border); border-radius: 25px;
-            padding: 30px; backdrop-filter: blur(15px); position: relative;
-            transition: 0.4s; animation: fadeInUp 0.6s ease forwards;
-        }
-        .card:hover { border-color: var(--accent); transform: scale(1.02); background: rgba(30, 30, 30, 0.6); }
-
-        .card-img { width: 70px; height: 70px; border-radius: 20px; object-fit: cover; margin-bottom: 20px; border: 2px solid var(--border); }
-        .card h3 { font-size: 22px; margin-bottom: 10px; font-weight: 800; }
-        .card p { font-size: 14px; color: #999; margin-bottom: 25px; height: 45px; overflow: hidden; }
+        /* Main Actions */
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         
-        .join-link { display: block; text-align: center; padding: 12px; background: #111; color: #fff; text-decoration: none; border-radius: 12px; font-weight: 700; border: 1px solid #222; }
-        .join-link:hover { border-color: var(--accent); color: var(--accent); }
+        .action-grid { 
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 50px; 
+        }
 
-        .delete-icon { position: absolute; top: 20px; right: 20px; color: #444; cursor: pointer; font-size: 20px; }
-        .delete-icon:hover { color: #ff4757; }
+        .btn-elite {
+            padding: 14px 28px; border-radius: 12px; background: var(--accent);
+            color: #000; border: none; font-weight: 800; cursor: pointer;
+            transition: 0.3s; font-size: 13px; text-transform: uppercase;
+        }
+        .btn-elite:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 212, 255, 0.4); }
 
-        /* Floating Modal */
+        .btn-outline {
+            background: transparent; border: 1px solid var(--border); color: #888;
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Group Cards */
+        .group-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card {
+            background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+            padding: 25px; position: relative; backdrop-filter: blur(15px);
+            transition: 0.4s; animation: fadeInUp 0.5s ease forwards;
+        }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        .card-img { width: 60px; height: 60px; border-radius: 15px; object-fit: cover; margin-bottom: 15px; border: 1px solid #333; }
+        .card-tag { font-size: 9px; font-weight: 800; color: var(--accent); border: 1px solid var(--accent); padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 10px; }
+        .card h3 { font-size: 18px; margin-bottom: 8px; }
+        .card p { font-size: 12px; color: #777; margin-bottom: 20px; line-height: 1.4; height: 35px; overflow: hidden; }
+        
+        .join-link { display: block; text-align: center; padding: 10px; background: #1a1a1a; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 13px; border: 1px solid #333; }
+        .join-link:hover { background: var(--accent); color: #000; }
+
+        .delete-btn { position: absolute; top: 15px; right: 15px; color: #333; cursor: pointer; font-size: 18px; }
+        .delete-btn:hover { color: #ff4757; }
+
+        /* Modal Form */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; align-items: center; justify-content: center; }
-        .modal-content { background: #111; padding: 40px; border-radius: 30px; width: 90%; max-width: 500px; border: 1px solid var(--accent); }
-        input, select, textarea { width: 100%; padding: 15px; margin-bottom: 15px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 12px; outline: none; }
+        .modal-box { background: #0a0a0a; border: 1px solid var(--accent); padding: 35px; border-radius: 25px; width: 90%; max-width: 450px; }
+        input, select, textarea { width: 100%; padding: 14px; margin-bottom: 12px; background: #151515; border: 1px solid #222; color: white; border-radius: 10px; outline: none; font-size: 13px; }
+        
+        /* Floating Footer Notice */
+        .notice-bar { text-align: center; margin: 40px 0; font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Audio Player Dock */
-        .music-player { position: fixed; bottom: 30px; left: 30px; background: rgba(0,0,0,0.8); border: 1px solid var(--border); padding: 12px 25px; border-radius: 100px; display: flex; align-items: center; gap: 15px; }
-        .play-pause { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; color: #000; font-size: 20px; }
+        /* Music Dock */
+        .music-dock { position: fixed; bottom: 25px; left: 25px; background: rgba(0,0,0,0.8); border: 1px solid var(--border); padding: 10px 20px; border-radius: 50px; display: flex; align-items: center; gap: 12px; }
+        .m-play { width: 35px; height: 35px; border-radius: 50%; background: var(--accent); border: none; cursor: pointer; color: #000; }
 
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body onclick="handleFirstClick()">
+<body onclick="initExperience()">
 
     <canvas id="bg-canvas"></canvas>
 
     <div class="dashboard">
         <div>
-            <span class="dash-info">LATENCY: <span id="ping">--</span></span>
-            <span class="dash-info" style="margin-left: 20px;">CLOCK: <span id="clock">00:00</span></span>
+            <span class="dash-info">PING: <span id="ping">--</span></span>
+            <span class="dash-info" style="margin-left: 15px;">TIME: <span id="clock">00:00</span></span>
         </div>
-        <span class="dash-info">DEV: MITZII</span>
+        <span class="dash-info">MITZII SECURE</span>
     </div>
 
     <header>
@@ -89,41 +103,45 @@
     </header>
 
     <div class="container">
-        <div class="add-btn-box">
-            <button class="btn-elite" onclick="toggleModal(true)">+ ADD NEW COMMUNITY</button>
+        <div class="action-grid">
+            <button class="btn-elite" onclick="toggleModal(true)">+ Submit Group / Channel</button>
+            <button class="btn-elite btn-outline" onclick="location.reload()">Refresh Data</button>
+            <button class="btn-elite btn-outline" onclick="alert('Link Copied to Clipboard!')">Share Hub</button>
+            <button class="btn-elite btn-outline" onclick="window.open('https://wa.me/yournumber', '_blank')">Contact Dev</button>
         </div>
 
         <div class="group-grid" id="main-grid"></div>
         
-        <div style="text-align: center; margin: 60px 0; font-size: 11px; color: #333; letter-spacing: 2px;">
-            DESIGNED BY DEV MITZII | ALL RIGHTS RESERVED 2026
+        <div class="notice-bar">
+            Notice: All groups are monitored. No illegal content allowed. <br> Powered by Mitzii Elite V1
         </div>
     </div>
 
     <div class="modal" id="modal">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 25px; font-family: 'Orbitron'; color: var(--accent);">SUBMIT GROUP</h2>
-            <input type="text" id="group-name" placeholder="Name">
-            <input type="url" id="group-link" placeholder="Invite Link">
-            <label style="font-size: 11px; color: #666; margin-bottom: 5px; display: block;">Upload Image from Gallery:</label>
-            <input type="file" id="group-img-file" accept="image/*">
-            <select id="group-cat">
-                <option>CHAT GROUP</option>
-                <option>ENTERTAINMENT</option>
-                <option>TECHNOLOGY</option>
-                <option>MOVIES</option>
+        <div class="modal-box">
+            <h2 style="margin-bottom: 20px; font-family: 'Orbitron'; font-size: 18px;">SUBMIT GROUP / CHANNEL</h2>
+            <input type="text" id="g-name" placeholder="Community Name">
+            <input type="url" id="g-link" placeholder="Invite Link (WhatsApp/Telegram)">
+            <label style="font-size: 10px; color: #555; display: block; margin-bottom: 5px;">Select Logo from Gallery:</label>
+            <input type="file" id="g-file" accept="image/*">
+            <select id="g-cat">
+                <option value="CHAT GROUP">CHAT GROUP</option>
+                <option value="ENTERTAINMENT">ENTERTAINMENT</option>
+                <option value="TECHNOLOGY">TECHNOLOGY</option>
+                <option value="MOVIES">MOVIES</option>
+                <option value="OTHER">OTHER (Special Category)</option>
             </select>
-            <textarea id="group-desc" placeholder="Rules & Short Info..."></textarea>
-            <button class="btn-elite" style="width: 100%;" onclick="saveNewGroup()">PUBLISH NOW</button>
-            <button onclick="toggleModal(false)" style="background:none; border:none; color:#444; width:100%; margin-top:15px; cursor:pointer;">CANCEL</button>
+            <textarea id="g-desc" placeholder="Brief rules or information..."></textarea>
+            <button class="btn-elite" style="width: 100%;" onclick="publish()">PUBLISH NOW</button>
+            <button onclick="toggleModal(false)" style="background:none; border:none; color:#444; width:100%; margin-top:10px; cursor:pointer; font-size: 12px;">CLOSE</button>
         </div>
     </div>
 
-    <div class="music-player">
-        <button class="play-pause" onclick="toggleMusic()" id="p-toggle">▶</button>
-        <div style="font-size: 11px;">
-            <div style="font-weight: 800; color: var(--accent);">SINHALA MIX</div>
-            <div id="m-status">SYNCING...</div>
+    <div class="music-dock">
+        <button class="m-play" onclick="controlAudio()" id="m-btn">▶</button>
+        <div style="font-size: 10px;">
+            <div style="font-weight: 800; color: var(--accent);">SINHALA NEW RAP</div>
+            <div id="m-status">CLICK TO START</div>
         </div>
     </div>
 
@@ -132,94 +150,74 @@
     </audio>
 
     <script>
-        // 1. CYBER ANIMATION (Electric Rain)
+        // 1. BG ANIMATION
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-        let lines = [];
-
-        function initBG() {
+        let stars = [];
+        function init() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            lines = Array.from({length: 40}, () => ({x: Math.random()*canvas.width, y: Math.random()*canvas.height, v: Math.random()*1+0.5, l: Math.random()*50+20}));
+            stars = Array.from({length: 50}, () => ({x: Math.random()*canvas.width, y: Math.random()*canvas.height, s: Math.random()*2, v: Math.random()*0.3}));
         }
-        function drawBG() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            ctx.strokeStyle = "rgba(0, 212, 255, 0.2)";
-            ctx.lineWidth = 1;
-            lines.forEach(l => {
-                ctx.beginPath(); ctx.moveTo(l.x, l.y); ctx.lineTo(l.x, l.y + l.l); ctx.stroke();
-                l.y += l.v; if(l.y > canvas.height) l.y = -l.l;
-            });
-            requestAnimationFrame(drawBG);
+        function draw() {
+            ctx.clearRect(0,0,canvas.width, canvas.height); ctx.fillStyle = "#00d4ff";
+            stars.forEach(s => { ctx.beginPath(); ctx.arc(s.x, s.y, s.s, 0, Math.PI*2); ctx.fill(); s.y -= s.v; if(s.y < 0) s.y = canvas.height; });
+            requestAnimationFrame(draw);
         }
-        initBG(); drawBG(); window.onresize = initBG;
+        init(); draw(); window.onresize = init;
 
-        // 2. DATA MANAGEMENT (CRUD + Gallery)
-        let db = JSON.parse(localStorage.getItem('mitzii_v2')) || [];
+        // 2. LOGIC (Submit + Gallery)
+        let data = JSON.parse(localStorage.getItem('mitzii_hub_v3')) || [];
 
-        function saveNewGroup() {
-            const file = document.getElementById('group-img-file').files[0];
+        function publish() {
+            const file = document.getElementById('g-file').files[0];
             const reader = new FileReader();
 
-            const pushToDB = (imgData) => {
-                const newEntry = {
-                    name: document.getElementById('group-name').value,
-                    link: document.getElementById('group-link').value,
-                    cat: document.getElementById('group-cat').value,
-                    desc: document.getElementById('group-desc').value,
-                    img: imgData || 'https://cdn-icons-png.flaticon.com/512/124/124034.png'
+            const pushData = (img) => {
+                const entry = {
+                    name: document.getElementById('g-name').value,
+                    link: document.getElementById('g-link').value,
+                    cat: document.getElementById('g-cat').value,
+                    desc: document.getElementById('g-desc').value,
+                    img: img || 'https://cdn-icons-png.flaticon.com/512/124/124034.png'
                 };
-                if(!newEntry.name || !newEntry.link) return alert("Fill Name and Link!");
-                db.unshift(newEntry);
-                localStorage.setItem('mitzii_v2', JSON.stringify(db));
+                if(!entry.name || !entry.link) return alert("Fill required info!");
+                data.unshift(entry);
+                localStorage.setItem('mitzii_hub_v3', JSON.stringify(data));
                 render(); toggleModal(false);
             };
 
             if(file) {
                 reader.readAsDataURL(file);
-                reader.onload = () => pushToDB(reader.result);
-            } else {
-                pushToDB();
-            }
+                reader.onload = () => pushData(reader.result);
+            } else { pushData(); }
         }
 
         function render() {
-            document.getElementById('main-grid').innerHTML = db.map((g, i) => `
+            document.getElementById('main-grid').innerHTML = data.map((item, i) => `
                 <div class="card">
-                    <span class="delete-icon" onclick="removeGroup(${i})">×</span>
-                    <img src="${g.img}" class="card-img">
-                    <div style="font-size: 10px; color: var(--accent); font-weight: 800; margin-bottom:5px;">${g.cat}</div>
-                    <h3>${g.name}</h3>
-                    <p>${g.desc}</p>
-                    <a href="${g.link}" class="join-link" target="_blank">JOIN COMMUNITY</a>
+                    <span class="delete-btn" onclick="del(${i})">×</span>
+                    <img src="${item.img}" class="card-img">
+                    <div class="card-tag">${item.cat}</div>
+                    <h3>${item.name}</h3>
+                    <p>${item.desc}</p>
+                    <a href="${item.link}" target="_blank" class="join-link">JOIN NOW</a>
                 </div>
             `).join('');
         }
 
-        function removeGroup(i) { db.splice(i, 1); localStorage.setItem('mitzii_v2', JSON.stringify(db)); render(); }
+        function del(i) { data.splice(i, 1); localStorage.setItem('mitzii_hub_v3', JSON.stringify(data)); render(); }
         function toggleModal(s) { document.getElementById('modal').style.display = s ? 'flex' : 'none'; }
 
-        // 3. AUDIO & INTERACTIVE
+        // 3. AUDIO & HUD
         const audio = document.getElementById('bg-audio');
         let started = false;
-
-        function handleFirstClick() {
-            if(!started) {
-                audio.play();
-                document.getElementById('p-toggle').innerText = "⏸";
-                document.getElementById('m-status').innerText = "NOW STREAMING";
-                started = true;
-            }
-        }
-
-        function toggleMusic() {
-            if(audio.paused) { audio.play(); document.getElementById('p-toggle').innerText = "⏸"; }
-            else { audio.pause(); document.getElementById('p-toggle').innerText = "▶"; }
-        }
+        function initExperience() { if(!started) { audio.play(); document.getElementById('m-btn').innerText = "⏸"; document.getElementById('m-status').innerText = "STREAMING..."; started = true; } }
+        function controlAudio() { if(audio.paused) { audio.play(); document.getElementById('m-btn').innerText = "⏸"; } else { audio.pause(); document.getElementById('m-btn').innerText = "▶"; } }
 
         setInterval(() => {
             const d = new Date();
-            document.getElementById('clock').innerText = d.getHours().toString().padStart(2,'0') + ":" + d.getMinutes().toString().padStart(2,'0');
-            document.getElementById('ping').innerText = Math.floor(Math.random()*25+10) + "ms";
+            document.getElementById('clock').innerText = d.getHours().toString().padStart(2,'0')+":"+d.getMinutes().toString().padStart(2,'0');
+            document.getElementById('ping').innerText = Math.floor(Math.random()*20+12)+"ms";
         }, 1000);
 
         render();
