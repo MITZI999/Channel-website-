@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MITZII HUB - Global Group Directory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff00;
+            --secondary: #00cc00;
+            --bg: #050505;
+            --card-bg: rgba(20, 20, 20, 0.9);
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0; padding: 0;
+            background: var(--bg);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Particles Canvas */
+        #bg-canvas {
+            position: fixed; top: 0; left: 0; z-index: -1;
+        }
+
+        /* Navigation */
+        .navbar {
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.85);
+            border-bottom: 1px solid var(--primary);
+            position: sticky; top: 0; z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 80px 20px; }
+        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 2.5rem; margin-bottom: 10px; color: var(--primary); }
+        .hero p { font-size: 1.1rem; color: #ccc; max-width: 700px; margin: 0 auto 30px; }
+
+        /* Action Buttons */
+        .btn {
+            display: inline-block; padding: 12px 25px; border-radius: 8px;
+            text-decoration: none; font-weight: 600; transition: 0.3s; cursor: pointer; border: none;
+        }
+        .btn-primary { background: var(--primary); color: black; box-shadow: 0 0 15px rgba(0, 255, 0, 0.3); }
+        .btn-primary:hover { background: white; transform: translateY(-3px); }
+
+        .container { max-width: 1100px; margin: auto; padding: 20px; }
+
+        /* Search & Filter Section */
+        .filter-box {
+            background: var(--card-bg); padding: 25px; border-radius: 15px;
+            border: 1px solid #333; margin-bottom: 40px;
+            display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;
+        }
+        .filter-box select, .filter-box input {
+            padding: 12px; background: #111; border: 1px solid #444; color: white; border-radius: 8px; min-width: 180px;
+        }
+
+        /* Submit Form Section */
+        .add-section {
+            background: var(--glass); padding: 40px; border-radius: 20px;
+            border: 1px solid #444; margin-bottom: 60px; backdrop-filter: blur(15px);
+            display: none; /* Initially hidden, toggled by button */
+        }
+        .add-section h2 { color: var(--primary); margin-top: 0; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
+
+        /* Group Cards Grid */
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;
+        }
+        .card {
+            background: var(--card-bg); border: 1px solid #222; border-radius: 15px;
+            padding: 20px; transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: 0 10px 30px rgba(0,255,0,0.1); }
+        .card .badge {
+            position: absolute; top: 15px; right: 15px; background: var(--primary);
+            color: black; font-size: 0.7rem; font-weight: bold; padding: 4px 10px; border-radius: 20px;
+        }
+        .card h3 { margin: 15px 0 10px; color: var(--primary); font-size: 1.2rem; }
+        .card p { font-size: 0.9rem; color: #bbb; line-height: 1.5; height: 45px; overflow: hidden; }
+        .join-btn {
+            display: block; width: 100%; text-align: center; padding: 10px;
+            background: #25D366; color: white; text-decoration: none; border-radius: 8px; margin-top: 15px; font-weight: 600;
+        }
+
+        footer {
+            text-align: center; padding: 60px 20px; background: #000; border-top: 1px solid #222; margin-top: 80px;
+        }
+        .dev-tag { color: var(--primary); font-weight: bold; letter-spacing: 2px; font-family: 'Orbitron', sans-serif; }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <nav class="navbar">
+        <div class="logo">MITZII HUB</div>
+        <div class="nav-links">
+            <a href="#explore">Explore</a>
+            <a href="javascript:void(0)" onclick="toggleForm()">+ Add Group</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Global Group Directory 🌐</h1>
+        <p>Discover the best WhatsApp Communities, Channels, and Groups from all around the world. Level up your social presence with DEV MITZII.</p>
+        <button class="btn btn-primary" onclick="toggleForm()">PROMOTE YOUR GROUP NOW</button>
+    </div>
+
+    <div class="container">
+        
+        <div class="add-section" id="addForm">
+            <h2>Add Your Community</h2>
+            <form id="submissionForm">
+                <div class="form-grid">
+                    <input type="text" id="gName" placeholder="Group / Channel Name" required>
+                    <input type="url" id="gLink" placeholder="WhatsApp Invite Link (https://...)" required>
+                    <select id="gCat">
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Education">Education</option>
+                        <option value="Business">Business</option>
+                        <option value="Movies">Movies / Lyrics</option>
+                    </select>
+                    <input type="text" id="gCountry" placeholder="Country (e.g. Sri Lanka 🇱🇰)">
+                </div>
+                <textarea id="gDesc" rows="3" placeholder="Short Description (What is your group about?)"></textarea>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">SUBMIT TO DIRECTORY</button>
+            </form>
+        </div>
+
+        <div class="filter-box" id="explore">
+            <input type="text" placeholder="Search groups...">
+            <select>
+                <option>All Categories</option>
+                <option>Technology</option>
+                <option>Entertainment</option>
+                <option>Movies</option>
+            </select>
+            <select>
+                <option>All Countries</option>
+                <option>Sri Lanka 🇱🇰</option>
+                <option>India 🇮🇳</option>
+                <option>Global 🌎</option>
+            </select>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <span class="badge">Trending</span>
+                <h3>Everything Channel</h3>
+                <p>Top status videos, lyrics, and memes in Sri Lanka.</p>
+                <div style="font-size: 0.8rem; color: #888;">Category: Entertainment</div>
+                <a href="#" class="join-btn">JOIN CHANNEL</a>
+            </div>
+
+            <div class="card">
+                <span class="badge">New</span>
+                <h3>Zero Attacker HQ</h3>
+                <p>Cyber security tips, tools and learning hub.</p>
+                <div style="font-size: 0.8rem; color: #888;">Category: Technology</div>
+                <a href="#" class="join-btn">JOIN GROUP</a>
+            </div>
+
+            <div class="card">
+                <span class="badge">Hot</span>
+                <h3>Status Lanthaya</h3>
+                <p>Daily stickers and HD status updates.</p>
+                <div style="font-size: 0.8rem; color: #888;">Category: Movies</div>
+                <a href="#" class="join-btn">JOIN CHANNEL</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Official Platform Powered by <span class="dev-tag">DEV MITZII</span></p>
+        <p>Proudly Made in Sri Lanka 🇱🇰</p>
+        <div style="font-size: 0.8rem; color: #444; margin-top: 15px;">&copy; 2026 Mitzii Global Inc. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // Particle Background Logic
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particles = [];
+            for (let i = 0; i < 120; i++) particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        init(); animate();
+
+        // UI Logic
+        function toggleForm() {
+            const form = document.getElementById('addForm');
+            form.style.display = (form.style.display === 'block') ? 'none' : 'block';
+            if(form.style.display === 'block') form.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('submissionForm').onsubmit = (e) => {
+            e.preventDefault();
+            alert("Success! Your group link has been submitted to DEV MITZII for verification. It will appear on the site soon.");
+            e.target.reset();
+            toggleForm();
+        };
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+    </script>
+</body>
+</html>
+
